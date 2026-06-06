@@ -3,7 +3,7 @@ import argparse         #to club arguments
 import tempfile         
 import queue
 import sys
-
+import keyboard
 import sounddevice as sd    
 import soundfile as sf
 import numpy  # Make sure NumPy is loaded before it is used in the callback
@@ -25,7 +25,7 @@ def callback(indata, frames, time, status):
     q.put(indata.copy())
 
 
-filename=str(input("enter file name"))
+filename=str(input("enter file name"))+".mp3"
 try:
 
     with sf.SoundFile(filename, mode='x', samplerate=16000,  #opens file in x mode (create file) (file handling)
@@ -36,7 +36,8 @@ try:
             print('press Ctrl+C to stop the recording')                         #ctrl-c is to terminate a command in terminal
             print('#' * 80)
             while True:
-                file.write(q.get())
+                file.write(q.get())                           #writes the audio into the .wav file
+
 
 
 except KeyboardInterrupt:
